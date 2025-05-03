@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Radio Digital Nueva Vida - En Vivo</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#000000">
+  <style>
+    body {
+      background-color: #111;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 60px;
+    }
+
+    .container {
+      background: #222;
+      border-radius: 12px;
+      padding: 40px;
+      display: inline-block;
+    }
+
+    h1 {
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+
+    audio {
+      width: 300px;
+      margin-top: 10px;
+    }
+
+    figure {
+      margin: 0 auto 20px auto;
+    }
+
+    figcaption {
+      margin-top: 10px;
+      font-style: italic;
+      color: #ccc;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <figure>
+      <img src="./iglesia_mensaje_de_nueva_vida_y_esperanza-removebg-preview.png" alt="Logo de la Radio" width="20%">
+      <figcaption>Transmisión 24/7</figcaption>
+    </figure>
+
+    <h1>🎧 Radio Digital Nueva Vida</h1>
+    <audio controls autoplay>
+      <source src="http://uk20freenew.listen2myradio.com:7628/;" type="audio/mpeg">
+      Tu navegador no puede reproducir esta radio.
+    </audio>
+
+    <p>Emisora perteneciente a <strong>Iglesia Mensaje de Nueva Vida y Esperanza</strong></p>
+  </div>
+
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("service-worker.js").then(() => {
+        console.log("Service Worker registrado correctamente.");
+      }).catch(error => {
+        console.log("Error al registrar el Service Worker:", error);
+      });
+    }
+  </script>
+</body>
+</html>
+
