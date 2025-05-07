@@ -4,8 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Radio Digital Nueva Vida - En Vivo</title>
-  <link rel="manifest" href="manifest.json">
+  <link rel="manifest" href="./manifest.json">
   <meta name="theme-color" content="#000000">
+  <!--arreglo del eror favicon.ico:1 Failed to load resource-->
+  <link rel="icon" href="icon-192.png" type="image/png">
 
   <!--Redes sociales-->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -54,8 +56,21 @@
       max-width: 100%;
       height: auto;
     }
+
+    #install-btn {
+      display: none;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #25D366;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
   </style>
 </head>
+
 <body>
   <div class="container">
     <figure>
@@ -74,9 +89,8 @@
     <p>Emisora perteneciente a <strong>Iglesia Mensaje de Nueva Vida y Esperanza</strong></p>
 
     <!-- Botón para instalar la app -->
-    <button id="install-btn" style="display: none; margin-top: 20px; padding: 10px 20px; background-color: #25D366; color: white; border: none; border-radius: 8px; font-size: 16px;">
-      📲 Instalar esta app
-    </button>
+    <button id="install-btn">📲 Instalar esta app</button>
+
   </div>
 
   <!--Registrar el service worker-->
@@ -89,30 +103,31 @@
       });
     }
 
- //Lógica para mostrar botón de instalación
-  let deferredPrompt;
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
+  //Lógica para mostrar botón de instalación
+    let deferredPrompt;
+        const installBtn = document.getElementById('install-btn');
 
-    const installBtn = document.getElementById('install-btn');
-    installBtn.style.display = 'inline-block';
+        window.addEventListener('beforeinstallprompt', (e) => {
+          console.log('✅ Evento beforeinstallprompt disparado');
+          e.preventDefault();
+          deferredPrompt = e;
+          installBtn.style.display = 'inline-block';
 
-    installBtn.addEventListener('click', async () => {
-      deferredPrompt.prompt();
-      const result = await deferredPrompt.userChoice;
+          installBtn.addEventListener('click', async () => {
+            deferredPrompt.prompt();
+            const result = await deferredPrompt.userChoice;
 
-      if (result.outcome === 'accepted') {
-        console.log('El usuario aceptó instalar la app.');
-     } else {
-        console.log('El usuario canceló la instalación.');
-      }
+            if (result.outcome === 'accepted') {
+              console.log('👍 Usuario aceptó la instalación');
+            } else {
+              console.log('👎 Usuario rechazó la instalación');
+            }
 
-      deferredPrompt = null;
-      installBtn.style.display = 'none';
-    });
-  });
-</script>
+            deferredPrompt = null;
+            installBtn.style.display = 'none';
+        });
+      });
+  </script>
 
   <!--Redes sociales-->
   <div style="margin-top: 30px;">
