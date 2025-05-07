@@ -1,18 +1,18 @@
 {
   "name": "Radio Digital Nueva Vida",
   "short_name": "Radio Nueva Vida",
-  "start_url": "index.html",
+  "start_url": "/radio.digital.nueva.vida/index.html",
   "display": "standalone",
   "background_color": "#111111",
   "theme_color": "#000000",
   "icons": [
     {
-      "src": "/Radio Digital Nueva Vida 2/icon-192.png",
+      "src": "/radio.digital.nueva.vida/icon-192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "/Radio Digital Nueva Vida 2/icon-512.png",
+      "src": "/radio.digital.nueva.vida/icon-512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
