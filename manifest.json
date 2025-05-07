@@ -1,7 +1,7 @@
 {
   "name": "Radio Digital Nueva Vida",
   "short_name": "Radio Nueva Vida",
-  "start_url": "/Radio Digital Nueva Vida 2/index.html",
+  "start_url": ".",
   "display": "standalone",
   "background_color": "#111111",
   "theme_color": "#000000",
