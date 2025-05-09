@@ -28,7 +28,7 @@
       padding: 20px 20px;
       margin: 5px auto;
       width: 100%;
-      max-width: 1000px;
+      max-width: 800px;
       box-sizing: border-box;
     }
 
@@ -110,6 +110,24 @@
 
     audio {
       display: none; /* 🔹 NUEVO: ocultamos el reproductor original */
+    }
+
+    /*Acomodo los iconos de redes sociales para pantalla vertical de celular*/
+    .social-icons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 30px;
+    }
+
+    .social {
+      font-size: 32px;
+      transition: transform 0.2s ease;
+    }
+
+    .social:hover {
+      transform: scale(1.2);
     }
 
     /*Animar cartel informativo*/
@@ -236,15 +254,14 @@
   </script>
 
   <!-- Redes sociales y plataformas -->
-  <div style="margin-top: 20px;">
-    <a href="https://wa.me/+5491127005824" target="_blank" style="margin: 0 10px; color: #25D366;"><i class="fab fa-whatsapp fa-2x"></i></a>
-    <a href="https://www.instagram.com/radionuevavida19" target="_blank" style="margin: 0 10px; color: #E1306C;"><i class="fab fa-instagram fa-2x"></i></a>
-    <a href="https://www.facebook.com/RadioDigitalNuevaVida" target="_blank" style="margin: 0 10px; color: #1877F2;"><i class="fab fa-facebook fa-2x"></i></a>
-    <a href="https://www.twitch.tv/radiodigitalnuevavida" target="_blank" style="margin: 0 10px; color: #9146FF;"><i class="fab fa-twitch fa-2x"></i></a>
-    <a href="https://www.youtube.com/@Ecos_de_EsperanzaNV" target="_blank" style="margin: 0 10px; color: #FF0000;"><i class="fab fa-youtube fa-2x"></i></a>
-    <a href="https://open.spotify.com/intl-es/artist/5p1Ixdpl6I5fFb11MSeVXu?si=i-VfxwtGQPuWIMUfwqhvsA" target="_blank" style="margin: 0 10px; color: #1DB954;"><i class="fab fa-spotify fa-2x"></i></a>
-    <a href="https://music.youtube.com/watch?v=l6WYVWeSnis&si=K8mk_Cl2JZkYqUbu" target="_blank" style="margin: 0 10px; color: #FF0000;"><i class="fas fa-music fa-2x"></i></a>
-    <a href="https://music.apple.com/ar/album/oh-jes%C3%BAs/1755010670?i=1755010673" target="_blank" style="margin: 0 10px; color: #FA57C1;"><i class="fab fa-apple fa-2x"></i></a>
+  <div class="social-icons">
+    <a href="https://wa.me/+5491127005824" target="_blank" class="social" style="color: #25D366;"><i class="fab fa-whatsapp"></i></a>
+    <a href="https://www.instagram.com/radionuevavida19" target="_blank" class="social" style="color: #E1306C;"><i class="fab fa-instagram"></i></a>
+    <a href="https://www.facebook.com/RadioDigitalNuevaVida" target="_blank" class="social" style="color: #1877F2;"><i class="fab fa-facebook"></i></a>
+    <a href="https://www.youtube.com/@Ecos_de_EsperanzaNV" target="_blank" class="social" style="color: #FF0000;"><i class="fab fa-youtube"></i></a>
+    <a href="https://open.spotify.com/intl-es/artist/5p1Ixdpl6I5fFb11MSeVXu?si=1N-_nxbSS1Sx5im_dbIU2w" target="_blank" class="social" style="color: #1DB954;"><i class="fab fa-spotify"></i></a>
+    <a href="https://music.youtube.com/watch?v=l6WYVWeSnis&si=K8mk_Cl2JZkYqUbu" target="_blank" class="social" style="color: #FF0000;"><i class="fas fa-music"></i></a>
+    <a href="https://music.apple.com/ar/album/oh-jes%C3%BAs/1755010670?i=1755010673" target="_blank" class="social" style="color: #ffffff;"><i class="fab fa-apple"></i></a>
   </div>
 
   <!-- Cartel Informativo con desplazamiento -->
