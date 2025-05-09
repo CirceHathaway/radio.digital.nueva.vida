@@ -4,10 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Radio Digital Nueva Vida - En Vivo</title>
-  <!--me conecto con el manifest-->
   <link rel="manifest" href="./manifest.json">
   <meta name="theme-color" content="#000000">
-  <!--arreglo del eror favicon.ico:1 Failed to load resource-->
   <link rel="icon" href="icon-192.png" type="image/png">
 
   <!--Redes sociales-->
@@ -19,14 +17,16 @@
       color: #fff;
       font-family: Arial, sans-serif;
       text-align: center;
-      padding: 60px;
+      padding: 5px;
+      margin: 0;
     }
 
+    /*Caja contenedora*/
     .container {
       background: #222;
-      border-radius: 12px;
-      padding: 40px 20px;
-      margin: 20px auto;
+      border-radius: 50px;
+      padding: 20px 20px;
+      margin: 5px auto;
       width: 100%;
       max-width: 1000px;
       box-sizing: border-box;
@@ -35,12 +35,6 @@
     h1 {
       font-size: 2em;
       margin-bottom: 20px;
-    }
-
-    audio {
-      width: 90%;
-      max-width: 400px;
-      margin-top: 10px;
     }
 
     figure {
@@ -58,16 +52,88 @@
       height: auto;
     }
 
+    /* Botón de instalación*/
     #install-btn {
       display: none;
       margin-top: 20px;
       padding: 10px 20px;
-      background: #25D366;
-      color: white;
+      background: #ffda93;
+      color: rgb(11, 11, 11);
       border: none;
       border-radius: 8px;
       font-size: 16px;
       cursor: pointer;
+    }
+
+    /* 🔹Tarjeta moderna tipo Spotify */
+    .player-card {
+      background-color: #1db954;
+      color: #fff;
+      padding: 30px 20px;
+      margin: 30px auto;
+      border-radius: 20px;
+      max-width: 400px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .player-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    }
+    .player-info h2 {
+      margin: 0 0 10px;
+      font-size: 1.5em;
+    }
+    .player-info p {
+      margin-bottom: 20px;
+      font-style: italic;
+      font-size: 0.95em;
+    }
+    .btn-play {
+      background-color: #fff;
+      color: #1db954;
+      border: none;
+      padding: 12px 24px;
+      font-size: 18px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    .btn-play i {
+      margin-right: 8px;
+    }
+    .btn-play:hover {
+      background-color: #1ed760;
+      color: #fff;
+    }
+
+    audio {
+      display: none; /* 🔹 NUEVO: ocultamos el reproductor original */
+    }
+
+    /*Animar cartel informativo*/
+    .marquee {
+      width: 100%;
+      overflow: hidden;
+      box-sizing: border-box;
+      background-color: #000;
+      color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      font-size: 14px;
+      margin-top: 20px;
+    }
+
+    .marquee-text {
+      display: inline-block;
+      white-space: nowrap;
+      animation: marquee 40s linear infinite;
+    }
+
+    @keyframes marquee {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
     }
   </style>
 </head>
@@ -80,21 +146,35 @@
     </figure>
 
     <h1>🎧 Radio Digital Nueva Vida</h1>
-    <audio controls autoplay>
-      <!---
-      <source src="http://uk20freenew.listen2myradio.com:7628/;" type="audio/mpeg"> -->
-      <source src="https://server4.hostradios.com/8424/stream" type="audio/mpeg"> 
+
+    <!-- 🔹 NUEVO: Tarjeta de reproducción con botón personalizado -->
+    <div class="player-card">
+      <div class="player-info">
+        <h2>Escuchá en vivo</h2>
+        <button class="btn-play" onclick="playRadio()">
+          <i class="fas fa-play"></i> Escuchar Radio
+        </button>
+      </div>
+    </div>
+
+    <audio id="radio">
+      <source src="https://server4.hostradios.com/8424/stream" type="audio/mpeg">
       Tu navegador no puede reproducir esta radio.
     </audio>
 
     <p>Emisora perteneciente a <strong>Iglesia Mensaje de Nueva Vida y Esperanza</strong></p>
-
-    <!-- Botón para instalar la app -->
     <button id="install-btn">📲 Instalar esta app</button>
-
   </div>
 
-  <!--le da prioridad al audio para que no corte y activa el panel de reproducción en el bloque de pantalla-->
+  <!-- 🔹 Función JS para el botón play -->
+  <script>
+    function playRadio() {
+      const audio = document.getElementById('radio');
+      audio.play().catch(err => console.log("No se pudo reproducir:", err));
+    }
+  </script>
+
+  <!-- Media Session para bloqueo de pantalla-->
   <script>
     if ('mediaSession' in navigator) {
       navigator.mediaSession.metadata = new MediaMetadata({
@@ -107,15 +187,12 @@
         ]
       });
     }
-  </script>  
+  </script>
 
-  <!--detecta si se interrumpe la transmisión y vuelve a cargar-->
+  <!-- Reconexión -->
   <script>
-    const audio = document.querySelector('audio');
-  
-    // Intentar reconectar si se pausa sin intención
+    const audio = document.getElementById('radio');
     audio.addEventListener('pause', () => {
-      // Si no fue pausado por el usuario y no terminó
       if (!audio.ended && !audio.seeking) {
         console.log('Intentando reconectar transmisión...');
         audio.load();
@@ -124,7 +201,7 @@
     });
   </script>
 
-  <!--Registrar el service worker-->
+  <!-- Service Worker + Instalación de la app -->
   <script>
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("service-worker.js").then(() => {
@@ -134,46 +211,56 @@
       });
     }
 
-  //Lógica para mostrar botón de instalación
     let deferredPrompt;
-        const installBtn = document.getElementById('install-btn');
+    const installBtn = document.getElementById('install-btn');
 
-        window.addEventListener('beforeinstallprompt', (e) => {
-          console.log('✅ Evento beforeinstallprompt disparado');
-          e.preventDefault();
-          deferredPrompt = e;
-          installBtn.style.display = 'inline-block';
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.style.display = 'inline-block';
 
-          installBtn.addEventListener('click', async () => {
-            deferredPrompt.prompt();
-            const result = await deferredPrompt.userChoice;
+      installBtn.addEventListener('click', async () => {
+        deferredPrompt.prompt();
+        const result = await deferredPrompt.userChoice;
 
-            if (result.outcome === 'accepted') {
-              console.log('👍 Usuario aceptó la instalación');
-            } else {
-              console.log('👎 Usuario rechazó la instalación');
-            }
+        if (result.outcome === 'accepted') {
+          console.log('👍 Usuario aceptó la instalación');
+        } else {
+          console.log('👎 Usuario rechazó la instalación');
+        }
 
-            deferredPrompt = null;
-            installBtn.style.display = 'none';
-        });
+        deferredPrompt = null;
+        installBtn.style.display = 'none';
       });
+    });
   </script>
 
-  <!--Redes sociales-->
-  <div style="margin-top: 30px;">
+  <!-- Redes sociales y plataformas -->
+  <div style="margin-top: 20px;">
     <a href="https://wa.me/+5491127005824" target="_blank" style="margin: 0 10px; color: #25D366;"><i class="fab fa-whatsapp fa-2x"></i></a>
     <a href="https://www.instagram.com/radionuevavida19" target="_blank" style="margin: 0 10px; color: #E1306C;"><i class="fab fa-instagram fa-2x"></i></a>
     <a href="https://www.facebook.com/RadioDigitalNuevaVida" target="_blank" style="margin: 0 10px; color: #1877F2;"><i class="fab fa-facebook fa-2x"></i></a>
     <a href="https://www.twitch.tv/radiodigitalnuevavida" target="_blank" style="margin: 0 10px; color: #9146FF;"><i class="fab fa-twitch fa-2x"></i></a>
+    <a href="https://www.youtube.com/@Ecos_de_EsperanzaNV" target="_blank" style="margin: 0 10px; color: #FF0000;"><i class="fab fa-youtube fa-2x"></i></a>
+    <a href="https://open.spotify.com/intl-es/artist/5p1Ixdpl6I5fFb11MSeVXu?si=i-VfxwtGQPuWIMUfwqhvsA" target="_blank" style="margin: 0 10px; color: #1DB954;"><i class="fab fa-spotify fa-2x"></i></a>
+    <a href="https://music.youtube.com/watch?v=l6WYVWeSnis&si=K8mk_Cl2JZkYqUbu" target="_blank" style="margin: 0 10px; color: #FF0000;"><i class="fas fa-music fa-2x"></i></a>
+    <a href="https://music.apple.com/ar/album/oh-jes%C3%BAs/1755010670?i=1755010673" target="_blank" style="margin: 0 10px; color: #FA57C1;"><i class="fab fa-apple fa-2x"></i></a>
   </div>
 
-  <!--Cartel Informativo-->
-  <div style="margin-top: 20px; background-color: #000; color: #fff; padding: 20px; border-radius: 10px; font-size: 14px;">
-    Iglesia Mensaje de Nueva Vida y Esperanza, días de reunión: <strong>Viernes 19:30hs</strong> y <strong>Domingos 10:30hs.</strong><br>
-    Juramento 11 (entre San Martín y Pacheco), Don Torcuato - Buenos Aires - Argentina.
+  <!-- Cartel Informativo con desplazamiento -->
+  <div class="marquee">
+    <div class="marquee-text">
+      Iglesia Mensaje de Nueva Vida y Esperanza - Días de reunión: <strong>Viernes 19:30hs</strong> y <strong>Domingos 10:30hs.</strong> 
+      Nos encontramos en <strong>Juramento 11</strong> (entre San Martín y Pacheco), Don Torcuato - Buenos Aires - Argentina. 
+      Días de programa radial: "Tiempo de Cambios": <strong>Lunes 20hs</strong> y "Al Mundo con amor": <strong>Martes 19:30hs</strong>.
+    </div>
   </div>
+
+  <!-- Footer -->
+  <div style="margin-top: 20px; background-color: #000; color: #fff; padding: 20px; border-radius: 10px; font-size: 20px; display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap;">
+  <div>Copyright © 2025 | Radio Digital Nueva Vida</div>
+  <div>Servicio hecho por: <span style="color: #ffda93;">CirceHathaway</span></div>
+</div>
 
 </body>
 </html>
-
