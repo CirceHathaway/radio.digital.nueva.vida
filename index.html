@@ -52,17 +52,28 @@
       height: auto;
     }
 
-    /* Botón de instalación y compartir */
-    #install-btn, #share-btn {
-      display: none;
-      margin: 10px 5px;
+    /* Contenedor para botones */
+    .button-group {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    /* Botón de instalación, compartir y biblia */
+    #install-btn, #share-btn, #bible-btn {
       padding: 10px 20px;
-      background: #ffda93;
-      color: rgb(11, 11, 11);
       border: none;
       border-radius: 8px;
       font-size: 16px;
       cursor: pointer;
+    }
+
+    #install-btn {
+      display: none;
+      background: #ffda93;
+      color: rgb(11, 11, 11);
     }
 
     #share-btn {
@@ -72,6 +83,15 @@
 
     #share-btn:hover {
       background: #840000;
+    }
+
+    #bible-btn {
+      background: #6b4e31;
+      color: #fff;
+    }
+
+    #bible-btn:hover {
+      background: #8b6f47;
     }
 
     /* 🔹Tarjeta moderna tipo Spotify */
@@ -190,8 +210,11 @@
     </audio>
 
     <p>Emisora perteneciente a <strong>Iglesia Mensaje de Nueva Vida y Esperanza</strong></p>
-    <button id="install-btn">📲 Instalar esta app</button>
-    <button id="share-btn">🔗 Compartir</button>
+    <div class="button-group">
+      <button id="install-btn">📲 Instalar esta app</button>
+      <button id="share-btn">📤 Compartir</button>
+      <a href="https://circehathaway.github.io/biblia.digital" target="_blank"><button id="bible-btn">📖 Biblia RVR</button></a>
+    </div>
   </div>
 
   <!-- 🔹 Función JS para el botón play -->
@@ -309,7 +332,7 @@
     <div class="marquee-text">
       Iglesia Mensaje de Nueva Vida y Esperanza - Días de reunión: <strong>Viernes 19:30hs</strong> y <strong>Domingos 10:30hs.</strong> 
       Nos encontramos en <strong>Juramento 11</strong> (entre San Martín y Pacheco), Don Torcuato - Buenos Aires - Argentina. 
-      Días de programa radial: "Tiempo de Cambios": <strong>Lunes por medio 20hs</strong> y "Al Mundo con amor": <strong>Martes 19:30hs</strong>.
+      Días de programa radial: "Tiempo de Cambios": <strong>Lunes 20hs</strong> y "Al Mundo con amor": <strong>Martes 19:30hs</strong>.
     </div>
   </div>
 
