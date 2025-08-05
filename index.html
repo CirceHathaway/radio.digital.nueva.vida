@@ -52,10 +52,10 @@
       height: auto;
     }
 
-    /* Botón de instalación*/
-    #install-btn {
+    /* Botón de instalación y compartir */
+    #install-btn, #share-btn {
       display: none;
-      margin-top: 20px;
+      margin: 10px 5px;
       padding: 10px 20px;
       background: #ffda93;
       color: rgb(11, 11, 11);
@@ -63,6 +63,15 @@
       border-radius: 8px;
       font-size: 16px;
       cursor: pointer;
+    }
+
+    #share-btn {
+      background: #ce0b0b;
+      color: #fff;
+    }
+
+    #share-btn:hover {
+      background: #840000;
     }
 
     /* 🔹Tarjeta moderna tipo Spotify */
@@ -182,6 +191,7 @@
 
     <p>Emisora perteneciente a <strong>Iglesia Mensaje de Nueva Vida y Esperanza</strong></p>
     <button id="install-btn">📲 Instalar esta app</button>
+    <button id="share-btn">🔗 Compartir</button>
   </div>
 
   <!-- 🔹 Función JS para el botón play -->
@@ -189,6 +199,35 @@
     function playRadio() {
       const audio = document.getElementById('radio');
       audio.play().catch(err => console.log("No se pudo reproducir:", err));
+    }
+  </script>
+
+  <!-- 🔹 Función JS para el botón compartir -->
+  <script>
+    const shareBtn = document.getElementById('share-btn');
+    if (navigator.share) {
+      shareBtn.style.display = 'inline-block';
+      shareBtn.addEventListener('click', async () => {
+        try {
+          await navigator.share({
+            title: 'Radio Digital Nueva Vida',
+            text: 'Escucha Radio Digital Nueva Vida en vivo, 24/7 desde la Iglesia Mensaje de Nueva Vida y Esperanza.',
+            url: window.location.href
+          });
+          console.log('Contenido compartido con éxito');
+        } catch (err) {
+          console.error('Error al compartir:', err);
+        }
+      });
+    } else {
+      shareBtn.style.display = 'inline-block';
+      shareBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText(window.location.href).then(() => {
+          alert('¡Enlace copiado al portapapeles! Puedes compartirlo manualmente.');
+        }).catch(err => {
+          console.error('Error al copiar el enlace:', err);
+        });
+      });
     }
   </script>
 
@@ -270,7 +309,7 @@
     <div class="marquee-text">
       Iglesia Mensaje de Nueva Vida y Esperanza - Días de reunión: <strong>Viernes 19:30hs</strong> y <strong>Domingos 10:30hs.</strong> 
       Nos encontramos en <strong>Juramento 11</strong> (entre San Martín y Pacheco), Don Torcuato - Buenos Aires - Argentina. 
-      Días de programa radial: "Tiempo de Cambios": <strong>Lunes 20hs</strong> y "Al Mundo con amor": <strong>Martes 19:30hs</strong>.
+      Días de programa radial: "Tiempo de Cambios": <strong>Lunes por medio 20hs</strong> y "Al Mundo con amor": <strong>Martes 19:30hs</strong>.
     </div>
   </div>
 
