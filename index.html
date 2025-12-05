@@ -94,49 +94,6 @@
       background: #8b6f47;
     }
 
-    /* 🔹Tarjeta moderna tipo Spotify */
-    .player-card {
-      background-color: #1db954;
-      color: #fff;
-      padding: 30px 20px;
-      margin: 30px auto;
-      border-radius: 20px;
-      max-width: 400px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .player-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
-    }
-    .player-info h2 {
-      margin: 0 0 10px;
-      font-size: 1.5em;
-    }
-    .player-info p {
-      margin-bottom: 20px;
-      font-style: italic;
-      font-size: 0.95em;
-    }
-    .btn-play {
-      background-color: #fff;
-      color: #1db954;
-      border: none;
-      padding: 12px 24px;
-      font-size: 18px;
-      border-radius: 30px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: background 0.3s ease, color 0.3s ease;
-    }
-    .btn-play i {
-      margin-right: 8px;
-    }
-    .btn-play:hover {
-      background-color: #1ed760;
-      color: #fff;
-    }
-
     audio {
       display: none; /* 🔹 NUEVO: ocultamos el reproductor original */
     }
@@ -182,32 +139,100 @@
       0% { transform: translateX(100%); }
       100% { transform: translateX(-100%); }
     }
+
+    /* ==================================================================
+       ESTILOS PARA EL REPRODUCTOR PERSONALIZADO
+       ================================================================== */
+
+    /* 1. El contenedor principal que envuelve todo */
+    .widget-wrapper {
+        position: relative; 
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+        border-radius: 16px; 
+        overflow: hidden; 
+        /* 🔹 CLAVE: Aumentamos la altura total del contenedor */
+        height: 380px; 
+        background-color: #222; /* Fondo base uniforme */
+    }
+
+    /* 2. La "Tapa" superior con el logo y título */
+    .widget-cover {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 320px; /* Espacio suficiente para logo grande y título */
+        z-index: 20; /* Asegura que esté por encima de todo */
+        background-color: #222; /* Color de fondo para tapar lo de abajo */
+
+        /* Centrado Flexbox */
+        display: flex;
+        flex-direction: column; 
+        justify-content: center; 
+        align-items: center;
+    }
+
+    /* Reset para el figure */
+    .widget-cover figure {
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Estilos del logo GRANDE */
+    .widget-cover img {
+        width: 150px; /* 🔹 Logo más grande */
+        height: auto;
+        margin-top: 10px;    /* Un poco de aire arriba */
+        margin-bottom: 15px; /* Separación con el título */
+    }
+
+    /* Estilos del Título */
+    .widget-cover h3 {
+        margin: 0;
+        font-size: 20px; 
+        font-weight: bold;
+        color: #fff;
+    }
+
+    /* 3. El Widget Original de Caster.fm */
+    .cstrEmbed {
+        position: absolute;
+        /* 🔹 CLAVE: Lo pegamos al fondo del contenedor principal */
+        bottom: 0; 
+        left: 0;
+        width: 100%;
+        z-index: 10;
+    }
   </style>
 </head>
 
 <body>
-  <div class="container">
-    <figure>
-      <img src="./iglesia_mensaje_de_nueva_vida_y_esperanza-removebg-preview.png" alt="Logo de la Radio" width="20%">
-      <figcaption>Transmisión 24/7</figcaption>
-    </figure>
+  <div class="widget-wrapper">
+        <div class="widget-cover">
+            <figure>
+                <img src="./iglesia_mensaje_de_nueva_vida_y_esperanza-removebg-preview.png" alt="Logo de la Radio">
+                <figcaption style="margin-top: 0; font-size: 12px;">Transmisión 24/7</figcaption>
+            </figure>
+            
+            <h3>🎧 Radio Digital Nueva Vida</h3>
+        </div>
 
-    <h1>🎧 Radio Digital Nueva Vida</h1>
-
-    <!-- 🔹 NUEVO: Tarjeta de reproducción con botón personalizado -->
-    <div class="player-card">
-      <div class="player-info">
-        <h2>Escuchá en vivo</h2>
-        <button class="btn-play" onclick="playRadio()">
-          <i class="fas fa-play"></i> Escuchar Radio
-        </button>
-      </div>
+        <div data-type="newStreamPlayer" 
+            data-publicToken="0c28a7fa-58df-41c9-93ab-1932f5551b10" 
+            data-theme="dark" 
+            data-color="e81e4d" 
+            data-channelId="a084c237-bc0b-4f53-ab81-4626d4383e89" 
+            data-rendered="false" 
+            class="cstrEmbed">
+            <a href="https://www.caster.fm">Shoutcast Hosting</a> 
+            <a href="https://www.caster.fm">Stream Hosting</a> 
+            <a href="https://www.caster.fm">Radio Server Hosting</a>
+        </div>
     </div>
 
-    <audio id="radio">
-      <source src="https://srv10.streamingradio.ar/8128/stream" type="audio/mpeg">
-      Tu navegador no puede reproducir esta radio.
-    </audio>
+    <script src="//cdn.cloud.caster.fm//widgets/embed.js"></script>
 
     <p>Emisora perteneciente a <strong>Iglesia Mensaje de Nueva Vida y Esperanza</strong></p>
     <div class="button-group">
@@ -217,13 +242,7 @@
     </div>
   </div>
 
-  <!-- 🔹 Función JS para el botón play -->
-  <script>
-    function playRadio() {
-      const audio = document.getElementById('radio');
-      audio.play().catch(err => console.log("No se pudo reproducir:", err));
-    }
-  </script>
+  
 
   <!-- 🔹 Función JS para el botón compartir -->
   <script>
@@ -269,17 +288,7 @@
     }
   </script>
 
-  <!-- Reconexión -->
-  <script>
-    const audio = document.getElementById('radio');
-    audio.addEventListener('pause', () => {
-      if (!audio.ended && !audio.seeking) {
-        console.log('Intentando reconectar transmisión...');
-        audio.load();
-        audio.play().catch(err => console.error('Error al reconectar:', err));
-      }
-    });
-  </script>
+
 
   <!-- Service Worker + Instalación de la app -->
   <script>
@@ -338,9 +347,9 @@
 
   <!-- Footer -->
   <div style="margin-top: 20px; background-color: #000; color: #fff; padding: 20px; border-radius: 10px; font-size: 20px; display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap;">
-  <div>Copyright © 2025 | Radio Digital Nueva Vida</div>
-  <div>Servicio hecho por: <span style="color: #ffda93;">CirceHathaway</span></div>
-</div>
+	<div>Copyright © 2025 | Radio Digital Nueva Vida</div>
+	<div>Servicio hecho por: <span style="color: #ffda93;">CirceHathaway</span></div>
+  </div>
 
 </body>
 </html>
